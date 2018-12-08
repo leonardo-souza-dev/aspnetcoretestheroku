@@ -3,13 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financas.UI", "Financas.UI\Financas.UI.csproj", "{EB38DADE-7C02-45C9-9FDD-8DD5E95F600E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financas.Framework", "Financas.Framework\Financas.Framework.csproj", "{5EABD08B-A2CE-4EFE-B970-039FA350F4B8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financas.WebApi", "Financas.WebApi\Financas.WebApi.csproj", "{FA1034D5-30D4-48D9-9C7D-409BC8E8AB67}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financas.Web", "Financas.Web\Financas.Web.csproj", "{84EF274F-7EB0-4CE3-B037-A85DE72D936C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financas.Web", "Financas.Web.csproj", "{84EF274F-7EB0-4CE3-B037-A85DE72D936C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

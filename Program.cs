@@ -14,17 +14,17 @@ namespace Financas.Web
     {
         public static void Main(string[] args)
         {
-            //BuildWebHost(args).Run();
-            var config = new ConfigurationBuilder().AddCommandLine(args).Build();
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseConfiguration(config)
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
+            BuildWebHost(args).Run();
+            //var config = new ConfigurationBuilder().AddCommandLine(args).Build();
+            //var host = new WebHostBuilder()
+            //    .UseKestrel()
+            //    .UseContentRoot(Directory.GetCurrentDirectory())
+            //    .UseConfiguration(config)
+            //    .UseIISIntegration()
+            //    .UseStartup<Startup>()
+            //    .Build();
 
-            host.Run();
+            //host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
