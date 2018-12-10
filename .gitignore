@@ -38,3 +38,5 @@ Financas.UI/
 Financas.WebApi/
 packages/
 outros/
+node_modules/
+bower_components/

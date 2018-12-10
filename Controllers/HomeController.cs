@@ -4,16 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Foo.Controllers
+namespace Financas.Web.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class HomeController : Controller
     {
+        [Route("")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         // GET api/values
+        [Route("api/[controller]")]
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3" };
         }
 
         // GET api/values/5
