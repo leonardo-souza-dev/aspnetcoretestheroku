@@ -38,10 +38,6 @@ namespace Financas.Web
             app.UseMvc();
 
 
-            DefaultFilesOptions options = new DefaultFilesOptions();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("/index.html");
-            app.UseDefaultFiles(options);
 
             app.Use(async (context, next) =>
             {
@@ -53,6 +49,15 @@ namespace Financas.Web
                     await next();
                 }
             });
+
+            DefaultFilesOptions options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("/index.html");
+            app.UseDefaultFiles(options);
+
+            app.UseStaticFiles();
+            app.UseFileServer(enableDirectoryBrowsing: false);
+            app.UseMvc();
         }
     }
 }
