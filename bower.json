@@ -15,6 +15,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "angularjs#v1.7.5"
+    "angular": "angularjs#v1.6.9",
+    "angular-ui-router": "1.0.15",
+    "bootstrap": "v4.0.0",
+    "toastr": "2.1.3"
   }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Financas.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System.IO;
 
 namespace Financas.Web
 {
@@ -25,6 +21,17 @@ namespace Financas.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors(o => o.AddPolicy("AppPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            //Database Connection
+            //var connection = @"Server=DESKTOP-80DEJMQ;Database=dbCore;Trusted_Connection=True;";
+            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FinLeoDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddDbContext<dbCoreContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,13 +39,11 @@ namespace Financas.Web
         {
             if (env.IsDevelopment())
             {
+                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
-
-
-
+            // Middleware to Handle Client Side Routes
             app.Use(async (context, next) =>
             {
                 await next();

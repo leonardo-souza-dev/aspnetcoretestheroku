@@ -43,3 +43,18 @@ gulp.task('copy-lib-js', function () {
 
 gulp.task("copy-all", ["copy-lib-css", "copy-lib-js"]);
 //Copy End
+
+gulp.task('min-js', function () {
+    gulp.src(['./app/**/*.js'])
+        .pipe(concat('app.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(root_path.webroot))
+});
+
+gulp.task('copy-folder-html', function () {
+    gulp.src('app/**/*.html')
+        .pipe(gulp.dest(root_path.webroot + 'views'));
+});
+
+gulp.task("build-all", ["min-js", "copy-folder-html"]);
+//Build End
