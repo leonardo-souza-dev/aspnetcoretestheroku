@@ -1,0 +1,20 @@
+<input type="text"
+       id="data"
+       placeholder="data"
+       value="{{t.data}}" />
+<input type="text"
+       id="descricao"
+       placeholder="descricao"
+       value="{{t.descricao}}" />
+<select>
+    <option value="{{t.categoria.id}}">{{t.categoria.nome}}</option>
+    <option ng-repeat="x in t.outrasCategorias()">{{x.nome}}</option>
+</select>
+<select>
+    <option value="{{t.conta.id}}">{{t.conta.nome}}</option>
+    <option ng-repeat="x in t.outrasContas()">{{x.nome}}</option>
+</select>
+<input type="text"
+       id="valor"
+       placeholder="0,00"
+       value="{{t.valor}}" />

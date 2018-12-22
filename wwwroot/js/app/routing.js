@@ -1,4 +1,4 @@
-﻿templatingApp.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$compileProvider',
+﻿finleo.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$compileProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $compileProvider) {
 
         //console.log('Appt.Main is now running')
@@ -14,7 +14,7 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'home.html',
+                templateUrl: '/js/app/home/home.html',
                 controller: 'HomeController'
             });
 

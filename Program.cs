@@ -7,9 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using WebAPI;
 
-namespace Financas.Web
+namespace FinLeo
 {
     public class Program
     {

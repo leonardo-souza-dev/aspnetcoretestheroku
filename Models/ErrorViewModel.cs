@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Financas.Web.Models
+namespace FinLeo.Models
 {
     public class ErrorViewModel
     {
