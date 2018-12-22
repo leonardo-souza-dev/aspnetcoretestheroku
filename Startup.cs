@@ -1,12 +1,16 @@
-﻿using Financas.Web.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Financas.Web.Models;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
 
-namespace Financas.Web
+namespace WebAPI
 {
     public class Startup
     {
@@ -21,48 +25,32 @@ namespace Financas.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddCors(o => o.AddPolicy("AppPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
 
-            //Database Connection
-            //var connection = @"Server=DESKTOP-80DEJMQ;Database=dbCore;Trusted_Connection=True;";
             var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FinLeoDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             services.AddDbContext<dbCoreContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
-
-            // Middleware to Handle Client Side Routes
-            app.Use(async (context, next) =>
+            else
             {
-                await next();
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = "/index.html";
-                    context.Response.StatusCode = 200;
-                    await next();
-                }
-            });
-
-            DefaultFilesOptions options = new DefaultFilesOptions();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("/index.html");
-            app.UseDefaultFiles(options);
+                app.UseExceptionHandler("/Home/Error");
+            }
 
             app.UseStaticFiles();
-            app.UseFileServer(enableDirectoryBrowsing: false);
-            app.UseMvc();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using WebAPI;
 
 namespace Financas.Web
 {
@@ -19,12 +20,7 @@ namespace Financas.Web
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseSetting("detailedErrors", "true")
-                .UseIISIntegration()
                 .UseStartup<Startup>()
-                .CaptureStartupErrors(true)
                 .Build();
     }
 }

@@ -5,17 +5,11 @@ using System.Threading.Tasks;
 using Financas.Web.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Financas.Web.Controllers
 {
-    [Route("api/Values"), Produces("application/json"), EnableCors("AppPolicy")]
+    //[Route("api/Values"), Produces("application/json"), EnableCors("AppPolicy")]
     public class ValuesController : Controller
     {
         private dbCoreContext _ctx = null;
@@ -24,6 +18,10 @@ namespace Financas.Web.Controllers
             _ctx = context;
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         // GET: api/Values/GetUser
         [HttpGet, Route("GetUser")]
