@@ -1,5 +1,7 @@
 finleo.controller('HomeController', ['$scope', function ($scope) {
-
+    window._m = $scope;
+    var _m = window._m;
+    
     //valores iniciais
     $scope.contas = [
         { nome: "Carteira", id: 1 },
@@ -14,35 +16,68 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         { nome: "Transporte", id: 3 }];
 
     $scope.transacoes = [{
+        id: 1,
         data: converterData(new Date(2018, 12, 21)),
         descricao: 'Barzinho',
         categoria: { nome: 'Lazer', id: 1 },
-        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias);},
+        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
         conta: { nome: 'Cartao de Credito', id: 2 },
         outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
-        valor: 123.45
+        valor: 123.45,
+        mostrarBotaoExcluir: true,
+        mostrarBotaoSalvar: false,
+        mostrarBotaoCancelar: false
     }, {
+        id: 2,
         data: converterData(new Date(2018, 12, 11)),
         descricao: 'Luz',
         categoria: { nome: 'Casa', id: 2 },
-        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias);},
+        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
         conta: { nome: 'Carteira', id: 1 },
         outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
-        valor: 50.54
-    }];
+        valor: 50.54,
+        mostrarBotaoExcluir: true,
+        mostrarBotaoSalvar: false,
+        mostrarBotaoCancelar: false
+        }];
+
+    $scope.novaTransacaoEmEdicao = false;
 
     $scope.adicionaTransacao = function () {
 
+        if ($scope.novaTransacaoEmEdicao) {
+            $scope.mostraMsgNovaTransacaoEmEdicao = true;
+            return;
+        }
+        //var novoId = obterNovoId($scope.transacoes);
         $scope.transacoes.push({
+            //id: novoId,
             data: converterData(new Date()),
             descricao: '',
             categoria: { nome: 'Escolha a categoria', id: 0 },
             outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
             conta: { nome: 'Escolha a conta', id: 0 },
             outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
-            valor: 0.00
+            valor: 0.00,
+            mostrarBotaoExcluir: false,
+            mostrarBotaoSalvar: true,
+            mostrarBotaoCancelar: true
         });
 
+        $scope.novaTransacaoEmEdicao = true;
+    }
+
+    $scope.excluirTransacao = function (t) {
+
+        //excluir transacao no backend..no callback cancelar:
+        $scope.transacoes.splice($scope.transacoes.indexOf(t), 1);
+        //$scope.cancelarTransacao(t);
+    }
+
+    $scope.cancelarTransacao = function (t) {
+        $scope.transacoes.splice($scope.transacoes.indexOf(t), 1);
+        $scope.novaTransacaoEmEdicao = false;
+        $scope.mostraMsgNovaTransacaoEmEdicao = false;
     }
 
     //function obterTransacoesApi() {
@@ -71,5 +106,12 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         function pad(s) { return (s < 10) ? '0' + s : s; }
         var d = new Date(inputFormat);
         return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
+    }
+    function obterNovoId(colecao) {
+        var ids = colecao.sort(function (a, b) {
+            return a.id - b.id;
+        });
+        if (ids.length > 0)
+            return ids[colecao.length - 1].id + 1;
     }
 }]);

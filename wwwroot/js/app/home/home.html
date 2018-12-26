@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Transações</h2><button ng-click="adicionaTransacao()">nova transacao</button>
+        <h3 ng-show="mostraMsgNovaTransacaoEmEdicao">Nova transacao em edicao</h3>
         <ul ng-repeat="t in transacoes">
             <li><transacao></transacao></li>
         </ul>
