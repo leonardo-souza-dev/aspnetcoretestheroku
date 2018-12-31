@@ -1,16 +1,14 @@
-<div ng-model="tr">
-    <input type="text" placeholder="data" value="{{t.data}}" />
-    <input type="text" placeholder="descricao" value="{{t.descricao}}" />
-    <select>
-        <option value="{{t.categoria.id}}">{{t.categoria.nome}}</option>
-        <option ng-repeat="x in t.outrasCategorias()">{{x.nome}}</option>
-    </select>
-    <select>
-        <option value="{{t.conta.id}}">{{t.conta.nome}}</option>
-        <option ng-repeat="x in t.outrasContas()">{{x.nome}}</option>
-    </select>
-    <input type="text" placeholder="0,00" value="{{t.valor}}" />
-    <button ng-click="excluirTransacao(t)" ng-show="t.mostrarBotaoExcluir">excluir</button>
-    <button ng-click="salvarTransacao(t)" ng-show="t.mostrarBotaoSalvar">salvar</button>
-    <button ng-click="cancelarTransacao(t)" ng-show="t.mostrarBotaoCancelar">cancelar</button>
-</div>
+<input type="text" placeholder="data" value="{{tin.data}}" />
+<input type="text" value="{{tin.descricao}}" />
+<select>
+    <option value="{{tin.categoria.id}}">{{tin.categoria.nome}}</option>
+    <option ng-repeat="x in t.outrasCategorias()">{{x.nome}}</option>
+</select>
+<select>
+    <option value="{{tin.conta.id}}">{{tin.conta.nome}}</option>
+    <option ng-repeat="x in t.outrasContas()">{{x.nome}}</option>
+</select>
+<input type="text" placeholder="0,00" ng-model="{{tin.valor}}" />
+<button ng-click="excluirTransacao(t)" ng-show="tin.mostrarBotaoExcluir">excluir</button>
+<button ng-click="salvarTransacao(t)" ng-show="tin.mostrarBotaoSalvar">salvar</button>
+<button ng-click="cancelarTransacao(t)" ng-show="tin.mostrarBotaoCancelar">cancelar</button>
