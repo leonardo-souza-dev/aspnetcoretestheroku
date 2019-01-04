@@ -1,13 +1,10 @@
 <div class="container-fluid">
     <div class="row">
-        <h2>Transações</h2><button ng-click="adicionaTransacao()">nova transacao</button>
-        <h3 ng-show="mostraMsgNovaTransacaoEmEdicao">Nova transacao em edica</h3>
-        <div ng-repeat="t in transacoes">
-            <div class="preview">{{t.descricao}} index: {{$index}}</div>
-        </div>
-        <ul ng-repeat="tout in transacoes">
-            <li><transacao tin="tout"></transacao></li>
-        </ul>
+        <h2>Transacoes</h2><button ng-click="adicionaTransacao()">nova transacao</button>
+        <h3 ng-show="mostraMsgNovaTransacaoEmEdicao">Nova transacao em edicao</h3>
 
+        <ul ng-repeat="t in transacoes">
+            <li><transacao tin="t"></transacao></li>
+        </ul>
     </div>
 </div>

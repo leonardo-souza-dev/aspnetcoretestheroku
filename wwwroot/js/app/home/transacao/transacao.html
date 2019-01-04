@@ -1,14 +1,14 @@
-<input type="text" placeholder="data" value="{{tin.data}}" />
-<input type="text" value="{{tin.descricao}}" />
+<input type="text" ng-model="tin.data" />
+<input type="text" ng-model="tin.descricao" />
 <select>
-    <option value="{{tin.categoria.id}}">{{tin.categoria.nome}}</option>
-    <option ng-repeat="x in t.outrasCategorias()">{{x.nome}}</option>
+    <option ng-model="tin.categoria.id">{{tin.categoria.nome}}</option>
+    <option ng-repeat="x in tin.outrasCategorias()">{{x.nome}}</option>
 </select>
 <select>
-    <option value="{{tin.conta.id}}">{{tin.conta.nome}}</option>
-    <option ng-repeat="x in t.outrasContas()">{{x.nome}}</option>
+    <option ng-model="tin.conta.id">{{tin.conta.nome}}</option>
+    <option ng-repeat="x in tin.outrasContas()">{{x.nome}}</option>
 </select>
-<input type="text" placeholder="0,00" ng-model="{{tin.valor}}" />
+<input type="text" ng-model="tin.valor" />
 <button ng-click="excluirTransacao(t)" ng-show="tin.mostrarBotaoExcluir">excluir</button>
 <button ng-click="salvarTransacao(t)" ng-show="tin.mostrarBotaoSalvar">salvar</button>
 <button ng-click="cancelarTransacao(t)" ng-show="tin.mostrarBotaoCancelar">cancelar</button>
