@@ -1,21 +1,16 @@
 finleo.controller('HomeController', ['$scope', function ($scope) {
     window._m = $scope;
     var _m = window._m;
-    
-    //valores iniciais
-    $scope.contas = [
-        { nome: "Carteira", id: 1 },
-        { nome: "Cartao de Credito", id: 2 },
-        { nome: "Itau", id: 3 },
-        { nome: "NuConta", id: 4 },
-        { nome: "Poupanca", id: 5 },
-        { nome: "SouzaSerra", id: 6 }];
+
     $scope.categorias = [
         { nome: "Lazer", id: 1 },
         { nome: "Casa", id: 2 },
-        { nome: "Transporte", id: 3 }];
-
-    $scope.transacoes = [{
+        { nome: "Transporte", id: 3 },
+        { nome: "Educacao", id: 4 },
+        { nome: "Outros", id: 5 }];
+    
+    //valores iniciais
+    var transacoesCartaoCredito = [{
         id: 1,
         data: converterData(new Date(2018, 12, 21)),
         descricao: 'Barzinho',
@@ -27,19 +22,66 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         mostrarBotaoExcluir: true,
         mostrarBotaoSalvar: false,
         mostrarBotaoCancelar: false
-    }, {
+    }];
+    
+    var transacoesCarteira = [{
         id: 2,
         data: converterData(new Date(2018, 12, 11)),
-        descricao: 'Luz',
-        categoria: { nome: 'Casa', id: 2 },
+        descricao: 'Mega Sena',
+        categoria: { nome: 'Outros', id: 5 },
         outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
         conta: { nome: 'Carteira', id: 1 },
         outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
-        valor: 50.54,
+        valor: 7,
         mostrarBotaoExcluir: true,
         mostrarBotaoSalvar: false,
         mostrarBotaoCancelar: false
         }];
+
+    var transacoesItau = [{
+        id: 1,
+        data: converterData(new Date(2018, 12, 21)),
+        descricao: 'Kung Fu',
+        categoria: { nome: 'Educacao', id: 4 },
+        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
+        conta: { nome: 'Itau', id: 3 },
+        outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
+        valor: 100,
+        mostrarBotaoExcluir: true,
+        mostrarBotaoSalvar: false,
+        mostrarBotaoCancelar: false
+    }];
+
+    $scope.contas = [
+        {
+            id: 1,
+            nome: "Carteira",
+            saldoInicial: 0,
+            saldoAtual: 17,
+            transacoes: transacoesCarteira,
+            contaSelecionada: true
+        },
+        {
+            id: 2,
+            nome: "Cartao de Credito",
+            saldoInicial: 0,
+            saldoAtual: -3000,
+            transacoes: transacoesCartaoCredito,
+            contaSelecionada: true
+        },
+        {
+            id: 3,
+            nome: "Itau",
+            saldoInicial: 0,
+            saldoAtual: 10,
+            transacoes: transacoesItau,
+            contaSelecionada: true
+        },
+        { nome: "NuConta", id: 4, saldoInicial: 0, saldoAtual: 3007 },
+        { nome: "NuReserva", id: 5, saldoInicial: 0, saldoAtual: 0 },
+        { nome: "Poupanca", id: 6, saldoInicial: 0, saldoAtual: 300 },
+        { nome: "SouzaSerra", id: 7, saldoInicial: 0, saldoAtual: 5.05 }];
+    
 
     $scope.novaTransacaoEmEdicao = false;
 
@@ -49,7 +91,7 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
             $scope.mostraMsgNovaTransacaoEmEdicao = true;
             return;
         }
-        //var novoId = obterNovoId($scope.transacoes);
+        
         $scope.transacoes.push({
             //id: novoId,
             data: converterData(new Date()),
@@ -65,20 +107,20 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         });
 
         $scope.novaTransacaoEmEdicao = true;
-    }
+    };
 
     $scope.excluirTransacao = function (t) {
 
         //excluir transacao no backend..no callback cancelar:
         $scope.transacoes.splice($scope.transacoes.indexOf(t), 1);
         //$scope.cancelarTransacao(t);
-    }
+    };
 
     $scope.cancelarTransacao = function (t) {
         $scope.transacoes.splice($scope.transacoes.indexOf(t), 1);
         $scope.novaTransacaoEmEdicao = false;
         $scope.mostraMsgNovaTransacaoEmEdicao = false;
-    }
+    };
 
     //function obterTransacoesApi() {
     //    $http({
@@ -96,7 +138,7 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         var outras = [];
         for (var i = 0; i < todas.length; i++) {
             var outra = todas[i];
-            if (outra.id != atual.id) {
+            if (outra.id !== atual.id) {
                 outras.push(outra);
             }
         }
