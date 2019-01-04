@@ -1,4 +1,4 @@
-finleo.controller('HomeController', ['$scope', function ($scope) {
+finleo.controller('HomeController', ['$scope', '$filter',  function ($scope, $filter) {
     window._m = $scope;
     var _m = window._m;
 
@@ -7,12 +7,38 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         { nome: "Casa", id: 2 },
         { nome: "Transporte", id: 3 },
         { nome: "Educacao", id: 4 },
-        { nome: "Outros", id: 5 }];
-    
-    //valores iniciais
+        { nome: "Outros", id: 5 },
+        { nome: "Alimentacao", id: 6 }];
+
+    var transacoesCarteira = [{
+        id: 10,
+        data: converterData(new Date(2019, 0, 1)),
+        descricao: 'Mega Sena',
+        categoria: { nome: 'Outros', id: 5 },
+        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
+        conta: { nome: 'Carteira', id: 1 },
+        outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
+        valor: 7,
+        mostrarBotaoExcluir: true,
+        mostrarBotaoSalvar: false,
+        mostrarBotaoCancelar: false
+    }, {
+        id: 11,
+        data: converterData(new Date(2019, 0, 2)),
+        descricao: 'Chocolate',
+        categoria: { nome: 'Alimentacao', id: 6 },
+        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
+        conta: { nome: 'Carteira', id: 1 },
+        outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
+        valor: 3,
+        mostrarBotaoExcluir: true,
+        mostrarBotaoSalvar: false,
+        mostrarBotaoCancelar: false
+        }];
+
     var transacoesCartaoCredito = [{
-        id: 1,
-        data: converterData(new Date(2018, 12, 21)),
+        id: 20,
+        data: converterData(new Date(2019, 0, 1)),
         descricao: 'Barzinho',
         categoria: { nome: 'Lazer', id: 1 },
         outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
@@ -23,24 +49,10 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         mostrarBotaoSalvar: false,
         mostrarBotaoCancelar: false
     }];
-    
-    var transacoesCarteira = [{
-        id: 2,
-        data: converterData(new Date(2018, 12, 11)),
-        descricao: 'Mega Sena',
-        categoria: { nome: 'Outros', id: 5 },
-        outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
-        conta: { nome: 'Carteira', id: 1 },
-        outrasContas: function () { return obterOutras(this.conta, $scope.contas); },
-        valor: 7,
-        mostrarBotaoExcluir: true,
-        mostrarBotaoSalvar: false,
-        mostrarBotaoCancelar: false
-        }];
 
     var transacoesItau = [{
-        id: 1,
-        data: converterData(new Date(2018, 12, 21)),
+        id: 30,
+        data: converterData(new Date(2019, 0, 3)),
         descricao: 'Kung Fu',
         categoria: { nome: 'Educacao', id: 4 },
         outrasCategorias: function () { return obterOutras(this.categoria, $scope.categorias); },
@@ -76,12 +88,8 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
             saldoAtual: 10,
             transacoes: transacoesItau,
             contaSelecionada: true
-        },
-        { nome: "NuConta", id: 4, saldoInicial: 0, saldoAtual: 3007 },
-        { nome: "NuReserva", id: 5, saldoInicial: 0, saldoAtual: 0 },
-        { nome: "Poupanca", id: 6, saldoInicial: 0, saldoAtual: 300 },
-        { nome: "SouzaSerra", id: 7, saldoInicial: 0, saldoAtual: 5.05 }];
-    
+        }];
+
 
     $scope.novaTransacaoEmEdicao = false;
 
@@ -91,7 +99,7 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
             $scope.mostraMsgNovaTransacaoEmEdicao = true;
             return;
         }
-        
+
         $scope.transacoes.push({
             //id: novoId,
             data: converterData(new Date()),
@@ -122,6 +130,11 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
         $scope.mostraMsgNovaTransacaoEmEdicao = false;
     };
 
+    $scope.transacoesOrdenadas = [];
+
+    mergeTransacoes();
+
+
     //function obterTransacoesApi() {
     //    $http({
     //        method: 'GET',
@@ -134,6 +147,15 @@ finleo.controller('HomeController', ['$scope', function ($scope) {
     //};
 
     //helpers
+    function mergeTransacoes() {
+        var mergeTransacoes = [];
+        for (var i = 0; i < $scope.contas.length; i++) {
+            var transacoes = $scope.contas[i].transacoes;
+            mergeTransacoes = mergeTransacoes.concat(transacoes);
+        }
+        $scope.transacoesOrdenadas = $filter('orderBy')(mergeTransacoes, 'data');
+    }
+
     function obterOutras(atual, todas) {
         var outras = [];
         for (var i = 0; i < todas.length; i++) {
